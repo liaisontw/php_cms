@@ -19,7 +19,7 @@
                    now(),'{$post_image}','{$post_content}','{$post_tags}', '{$post_status}') "; 
 
         $create_post_query = mysqli_query($connection, $query);  
-        confirm( $create_post_query );
+        confirmQuery( $create_post_query );
         
     }
 
