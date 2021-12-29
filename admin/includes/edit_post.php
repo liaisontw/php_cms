@@ -7,7 +7,6 @@
     $select_posts_by_id = mysqli_query($connection, $query);
 
     while($row = mysqli_fetch_assoc($select_posts_by_id) ) {
-    //while($row = mysqli_fetch_assoc($the_post_id) ) {
         $post_id            = $row['post_id'];
         $post_author        = $row['post_author'];
         $post_title         = $row['post_title'];
@@ -19,6 +18,42 @@
         $post_comment_count = $row['post_comment_count'];
         $post_date          = $row['post_date'];
     }
+
+    if ( isset( $_POST['update_post'] ) ) {
+        $post_title           =  $_POST[ 'title' ];
+        $post_author          =  $_POST[ 'author' ];
+        $post_category_id     =  $_POST[ 'post_category' ];
+        $post_status          =  $_POST[ 'post_status' ];
+        $post_image           = $_FILES[ 'image' ][ 'name' ];
+        $post_image_temp      = $_FILES[ 'image' ][ 'tmp_name' ];
+        $post_tags            =  $_POST[ 'post_tags' ];
+        $post_content         =  $_POST[ 'post_content' ];
+
+        move_uploaded_file( $post_image_temp, "../images/$post_image" );
+
+        if ( empty( $post_image ) ) {
+            $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
+            $select_image = mysqli_query( $connection, $query );
+
+            while($row = mysqli_fetch_assoc( $select_image ) ) {
+                $post_image = $row['post_image'];
+            }
+        }
+        
+        $query  = "UPDATE posts SET ";
+        $query .= "post_title       = '{$post_title      }', ";
+        $query .= "post_author      = '{$post_author     }', ";
+        $query .= "post_category_id = '{$post_category_id}', ";
+        $query .= "post_status      = '{$post_status     }', ";
+        $query .= "post_image       = '{$post_image      }', ";
+        $query .= "post_tags        = '{$post_tags       }', ";
+        $query .= "post_content     = '{$post_content    }', ";
+        $query .= "post_date        =   now() "    ;
+        $query .= "WHERE post_id    =  {$the_post_id}";
+
+        $update_post = mysqli_query($connection, $query);  
+        confirmQuery( $update_post );
+    }
 ?>
 <form action="" method="post" enctype="multipart/form-data">    
     <div class="form-group">
@@ -27,8 +62,7 @@
     </div>
 
     <div class="form-group">
-        <label for="category">Category</label>
-        <input value="<?php echo $post_category_id; ?>" type="text" class="form-control" name="post_category_id">
+        <label for="category">Categories</label>
         <select name="post_category" id="post_category">
 <?php
         $query = "SELECT * FROM categories";
@@ -67,6 +101,7 @@
      
     <div class="form-group">
         <img width="100" src="../images/<?php echo $post_image; ?>" >
+        <input type="file"  name="image">
     </div>
 
     <div class="form-group">
@@ -82,6 +117,6 @@
     </div>
 
     <div class="form-group">
-        <input class="btn btn-primary" type="submit" name="create_post" value="Publish Post">
+        <input class="btn btn-primary" type="submit" name="update_post" value="Update Post">
     </div>
 </form>
