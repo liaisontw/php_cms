@@ -47,8 +47,8 @@
         }
         //echo "<td>Some Title</td>";
         echo "<td>$comment_date</td>";
-        echo "<td><a href='posts.php?source=edit_post&p_id={$comment_id}'>Approve</a></td>";
-        echo "<td><a href='posts.php?delete={$comment_id}'>Unapprove</a></td>";
+        echo "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>";
+        echo "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
         echo "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";
         echo "</tr>";
     }
@@ -59,6 +59,25 @@
                         </table>
 
 <?php 
+    if ( isset( $_GET[ 'approve' ] ) ) {
+
+        $the_comment_id  = $_GET[ 'approve' ];
+        $query        = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$the_comment_id}";
+        $approve_comment_query = mysqli_query( $connection, $query );
+        header("Location: comments.php");
+
+    }
+
+
+    if ( isset( $_GET[ 'unapprove' ] ) ) {
+
+        $the_comment_id  = $_GET[ 'unapprove' ];
+        $query        = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$the_comment_id}";
+        $unapprove_comment_query = mysqli_query( $connection, $query );
+        header("Location: comments.php");
+
+    }
+
     if ( isset( $_GET[ 'delete' ] ) ) {
 
         $the_comment_id  = $_GET[ 'delete' ];
@@ -67,5 +86,6 @@
         header("Location: comments.php");
 
     }
+
 
 ?>
