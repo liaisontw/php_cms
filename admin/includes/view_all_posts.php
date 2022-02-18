@@ -12,7 +12,6 @@
                                     <th>Date</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
