@@ -43,28 +43,7 @@
         </select>
     </div>
 
-    <!-- <div class="form-group">
-        <label for="users">Users</label>
-        <select name="post_user" id="">
-
-        </select>
-    </div> 
-    <div class="form-group">
-        <select name="post_status" id="">
-            <option value="draft">Post Status</option>
-            <option value="published">Published</option>
-            <option value="draft">Draft</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="post_image">Post Image</label>
-        <input type="file"  name="image">
-    </div>
-
--->
-  
-
+ 
     <div class="form-group">
         <label for="post_tags">Username</label>
         <input type="text" class="form-control" name="username">
