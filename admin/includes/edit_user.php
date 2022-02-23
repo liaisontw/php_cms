@@ -15,6 +15,8 @@
             $user_image     = $row['user_image'];
             $user_role      = $row['user_role'];
         }
+
+        
     }
 
     if ( isset( $_POST['edit_user'] ) ) {
@@ -26,17 +28,28 @@
         $user_email     = $_POST['user_email'];
         $user_password  = $_POST['user_password'];
         
-        //$user_image     = $_POST['user_image'];
+        // $user_image     = $_POST['user_image'];
+        // move_uploaded_file( $user_image_temp, "../images/$user_image" );
+        // if ( empty( $user_image ) ) {
+        //     $query = "SELECT * FROM users WHERE post_id = $the_post_id ";
+        //     $select_image = mysqli_query( $connection, $query );
 
-        //move_uploaded_file( $post_image_temp, "../images/$post_image" );
-        $query = "INSERT INTO users(user_firstname, user_lastname,  
-                    user_role,username,user_email,user_password) ";
-             
-        $query .= "VALUES('{$user_firstname}', '{$user_lastname}',  
-                    '{$user_role}','{$username}','{$user_email}','{$user_password}') "; 
+        //     while($row = mysqli_fetch_assoc( $select_image ) ) {
+        //         $post_image = $row['post_image'];
+        //     }
+        // }
+        
+        $query  = "UPDATE users SET ";
+        $query .= "user_firstname = '{$user_firstname}', ";
+        $query .= "user_lastname  = '{$user_lastname }', ";
+        $query .= "user_role      = '{$user_role     }', ";
+        $query .= "username       = '{$username      }', ";
+        $query .= "user_email     = '{$user_email    }', ";
+        $query .= "user_password  = '{$user_password }' ";
+        $query .= "WHERE user_id  =  {$the_user_id}";
 
-        $create_user_query = mysqli_query($connection, $query);  
-        confirmQuery( $create_user_query );
+        $update_user = mysqli_query($connection, $query);  
+        confirmQuery( $update_user );
         
     }
 
@@ -55,9 +68,14 @@
 
     <div class="form-group">
         <select name="user_role" id="">
-            <option value="subscriber">Select Options</option>
-            <option value="admin">Admin</option>
-            <option value="subscriber">Subscriber</option>
+            <option value="subscriber"><?php echo $user_role; ?></option>
+            <?php
+                if ( 'admin' === $user_role ) {
+                    echo "<option value='subscriber'>Subscriber</option>";
+                } else {
+                    echo "<option value='admin'>Admin</option>";        
+                }
+            ?>
         </select>
     </div>
 
