@@ -39,7 +39,9 @@
     <![endif]-->
     
 
-    <!-- <script src="js/jquery.js"></script> -->
+    <script src="js/jquery.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="../ckeditor4/ckeditor.js"></script>
 
