@@ -9,6 +9,23 @@
         $username = mysqli_real_escape_string( $connection, $username );
         $email    = mysqli_real_escape_string( $connection, $email );
         $password = mysqli_real_escape_string( $connection, $password );
+
+        $query = "SELECT randSalt FROM users";
+        $select_randsalt_query = mysqli_query($connection, $query);
+        if ( !$select_randsalt_query ) {
+            die( "Query Failed" . mysqli_error($connection) );
+        }
+
+        $row  = mysqli_fetch_array( $select_randsalt_query );
+        $salt =  $row['randSalt'];
+
+        $query  = "INSERT INTO users (username, user_email, user_password, user_role) ";
+        $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber')";
+        $registration_user_query = mysqli_query($connection, $query);
+        if ( !$registration_user_query ) {
+            die( "Query Failed" . mysqli_error($connection) . ' ' . mysqli_errno($connection) );
+        }
+
     }
 ?>
 
